@@ -121,7 +121,7 @@ it('multiSign() and applyMultiSignatures() and should be deterministic', functio
   var sig2 = zerojs.transaction.multiSign(txobj, 0, priv2, redeemScript)
 
   expect(sig1).to.equal('304402200f15811d9116230ff14d2b5af3014f7d42e7e1ffb280169b3dc003f02d78039302201d0e33ffd19d9aaafce0c1bbff1913ad244678e963f65bd493a7502d7eb65fa501')
-  expect(sig2).to.equal('3045022100db1f423fe11bf06c9c97692e8086f5743653cad289e3a1c085ae656847ffb9d10220063c103d8c7c54597b055106ab70a45a2254c63435b64375a966c002f85d141901')
+  expect(sig2).to.equal('304402205fd2a39a83fbe6c8a2e188ef7af2f259bc5bd205ff2f965066a55b0a1e4afb6f022011ec5f1c568ec8b70e41fe353ca5a2cc53c1a12678950efaad21c2f836423c5901')
 
   var tx0 = zerojs.transaction.applyMultiSignatures(txobj, 0, [sig1, sig2], redeemScript)
 
