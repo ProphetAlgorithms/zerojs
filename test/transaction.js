@@ -113,7 +113,7 @@ it('multiSign() and applyMultiSignatures() and should be deterministic', functio
       vout: 0,
       scriptPubKey: ''
     }],
-    [{address: 't14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1', satoshis: 10000}]
+    [{address: 't1XaN7hDMnc7SKCWuFx75MbMtyuRW8Dz2jJ', satoshis: 10000}]
   )
 
   // Signatures Must be in order
