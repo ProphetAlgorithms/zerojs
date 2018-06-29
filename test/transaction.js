@@ -82,7 +82,7 @@ it('multiSign() for x-of-5 should be deterministic', function () {
       vout: 0,
       scriptPubKey: ''
     }],
-    [{address: 'ztimpo6bUJk8ngMpRXf3yyhTZBMDLQrDQJD', satoshis: 5000000000}
+    [{address: 'tmDJPDgfg5ziZwCdKon2VDwtukfrp9yMAHS', satoshis: 5000000000}
     ]
   )
 
@@ -113,7 +113,7 @@ it('multiSign() and applyMultiSignatures() and should be deterministic', functio
       vout: 0,
       scriptPubKey: ''
     }],
-    [{address: 'zneng6nRqTrqTKfjYAqXT86HWtk96ftPjtX', satoshis: 10000}]
+    [{address: 't14oHp2v54vfmdgQ3v3SNuQga8JKHTNi2a1', satoshis: 10000}]
   )
 
   // Signatures Must be in order
