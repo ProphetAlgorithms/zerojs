@@ -1,9 +1,9 @@
 {
-  "name": "zencashjs",
+  "name": "zerojs",
   "version": "v1.1.9a",
-  "description": "Dead easy to use Zencash JavaScript based library",
+  "description": "Dead easy to use Zero JavaScript based library",
   "main": "./lib/index.js",
-  "repository": "https://github.com/ZencashOfficial/zencashjs",
+  "repository": "https://github.com/ProphetAlgorithms/zerojs",
   "author": "Kendrick Tan <kendricktan0814@gmail.com>",
   "license": "MIT",
   "dependencies": {
