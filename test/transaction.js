@@ -71,9 +71,9 @@ it('multiSign() for x-of-5 should be deterministic', function () {
     'cPSDZ6VjeLEsSx6JYetJAajN1p5L5Vod8k5haQH9s2M4nyS48NnW']
   var privKeys = privKeysWIF.map((x) => zerojs.address.WIFToPrivKey(x))
   var pubKeys = privKeys.map((x) => zerojs.address.privKeyToPubKey(x, true))
-   var addresses = pubKeys.map((x) => zerojs.address.pubKeyToAddr(x, '1d25'))
+  //var addresses = pubKeys.map((x) => zerojs.address.pubKeyToAddr(x, '1d25'))
   var redeemScript = zerojs.address.mkMultiSigRedeemScript(pubKeys, 2, 5)
-   var multiSigAddress = zerojs.address.multiSigRSToAddress(redeemScript, '1cba')
+  //var multiSigAddress = zerojs.address.multiSigRSToAddress(redeemScript, '1cba')
 
 
   var txobj = zerojs.transaction.createRawTx(
