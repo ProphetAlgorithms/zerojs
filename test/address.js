@@ -19,7 +19,7 @@ it('PrivateKeyToWIFFormat() should be deterministic', function () {
 })
 
 it('PrivateKeyToPublicKey() should be deterministic', function () {
-  var priv = zenrojs.address.privKeyToPubKey(
+  var priv = zerojs.address.privKeyToPubKey(
     '2c3a48576fe6e8a466e78cd2957c9dc62128135540bbea0685d7c4a23ea35a6c'
   )
   expect(priv).to.equal(
