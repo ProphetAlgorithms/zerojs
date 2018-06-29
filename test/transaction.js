@@ -10,7 +10,7 @@ it('serializeTx() and desrializeTx() should be deterministic', function () {
       vout: 0,
       scriptPubKey: '76a914da46f44467949ac9321b16402c32bbeede5e3e5f88ac20ebd78933082d25d56a47d471ee5d57793454cf3d2787f77c21f9964b02000000034f2902b4'
     }],
-    [{address: 'znkz4JE6Y4m8xWoo4ryTnpxwBT5F7vFDgNf', satoshis: 100000}]
+    [{address: 't1dmkK8t4PWQwWLaRx63R4U1ZYEXXJn9XBS', satoshis: 100000}]
   )
   var txobj_serialized = zerojs.transaction.serializeTx(txobj)
   var txobj_deserialized = zerojs.transaction.deserializeTx(txobj_serialized)
@@ -32,7 +32,7 @@ it('signTx() should be deterministic', function () {
       vout: 0,
       scriptPubKey: '76a914da46f44467949ac9321b16402c32bbeede5e3e5f88ac20c243be1a6b3d319e40e89b159235a320a1cd50d35c2e52bc79e94b990100000003d92c02b4'
     }],
-    [{address: 'znkz4JE6Y4m8xWoo4ryTnpxwBT5F7vFDgNf', satoshis: 1000000}]
+    [{address: 't1dmkK8t4PWQwWLaRx63R4U1ZYEXXJn9XBS', satoshis: 1000000}]
   )
 
   const compressPubKey = true
