@@ -15,23 +15,23 @@ var pubKey = zerojs.address.privKeyToPubKey(priv)
 // 048a789e0910b6aa314f63d2cc666bd44fa4b71d7397cb5466902dc594c1a0a0d2e4d234528ff87b83f971ab2b12cd2939ff33c7846716827a5b0e8233049d8aad
 
 var zAddr = zerojs.address.pubKeyToAddr(pubKey)
-// znkz4JE6Y4m8xWoo4ryTnpxwBT5F7vFDgNf
+// t1dmkK8t4PWQwWLaRx63R4U1ZYEXXJn9XBS
 
 var txobj = zerojs.transaction.createRawTx(
   [{
       txid: '196173ec34d22a52cc689a21d01dd33b633671cbe1141e7e66240c7f3b4ccf7b', vout: 0,
       scriptPubKey: '76a914da46f44467949ac9321b16402c32bbeede5e3e5f88ac20ebd78933082d25d56a47d471ee5d57793454cf3d2787f77c21f9964b02000000034f2902b4'
   }],
-  [{address: 'znkz4JE6Y4m8xWoo4ryTnpxwBT5F7vFDgNf', satoshis: 100000}]
+  [{address: 't1dmkK8t4PWQwWLaRx63R4U1ZYEXXJn9XBS', satoshis: 100000}]
 )
 
 // To do a NULL_DATA transaction
 // var txobj = zerojs.transaction.createRawTx(
 //   [{
 //       txid: '196173ec34d22a52cc689a21d01dd33b633671cbe1141e7e66240c7f3b4ccf7b', vout: 0,
-//       scriptPubKey: '76a914da46f44467949ac9321b16402c32bbeede5e3e5f88ac20ebd78933082d25d56a47d471ee5d57793454cf3d2787f77c21f9964b02000000034f2902b4'
+//       scriptPubKey: '76a914da46f44467949ac9321b16402c32bbeede5e3e5f88ac20c243be1a6b3d319e40e89b159235a320a1cd50d35c2e52bc79e94b990100000003d92c02b4'
 //   }],
-//   [{address: 'znkz4JE6Y4m8xWoo4ryTnpxwBT5F7vFDgNf', satoshis: 99000},
+//   [{address: 't1dmkK8t4PWQwWLaRx63R4U1ZYEXXJn9XBS', satoshis: 99000},
 //    {address: undefined, data: 'hello world', satoshis: 900}]
 // )
 
@@ -70,22 +70,22 @@ var redeemScript = zerojs.address.mkMultiSigRedeemScript(pubKeys, 2, 3)
 // 522103519842d08ea56a635bfa8dd617b8e33f0426530d8e201107dd9a6af9493bd4872102d3ac8c0cb7b99a26cd66269a312afe4e0a621579dfe8b33e29c597a32a6165442102696187262f522cf1fa2c30c5cd6853c4a6c51ad5ba418abb4e3898dbc5a93d2e53ae
 
 var multiSigAddress = zerojs.address.multiSigRSToAddress(redeemScript)
-// zsmSCni8GXoCdTGqUfn26QJVGh6rpaFs17T
+// t3 address
 
 var txobj = zerojs.transaction.createRawTx(
   [{
       txid: 'f5f324064de9caab9353674c59f1c3987ca997bf5882a41a722686883e089581', vout: 0,
       scriptPubKey: '' // DOn't need script pub key since we'll be using redeemScript to sign
   }],
-  [{address: 'zneng6nRqTrqTKfjYAqXT86HWtk96ftPjtX', satoshis: 10000}]
+  [{address: 't1XaN7hDMnc7SKCWuFx75MbMtyuRW8Dz2jJ', satoshis: 10000}]
 )
 
 // Prepare our signatures for mutli-sig
 var sig1 = zerojs.transaction.multiSign(txobj, 0, privKeys[0], redeemScript)
-// 3045022100c65ec438dc13028b1328a0f8426e1970ef202cba168772fe9d91d141e3020413022021b038c2098c29014aa7feef1624c3d9e4035ca960791f3bbe256df9f008038d01
+// 304402200f15811d9116230ff14d2b5af3014f7d42e7e1ffb280169b3dc003f02d78039302201d0e33ffd19d9aaafce0c1bbff1913ad244678e963f65bd493a7502d7eb65fa501
 
 var sig2 = zerojs.transaction.multiSign(txobj, 0, privKeys[1], redeemScript)
-// 3045022100db1f423fe11bf06c9c97692e8086f5743653cad289e3a1c085ae656847ffb9d10220063c103d8c7c54597b055106ab70a45a2254c63435b64375a966c002f85d141901
+// 304402205fd2a39a83fbe6c8a2e188ef7af2f259bc5bd205ff2f965066a55b0a1e4afb6f022011ec5f1c568ec8b70e41fe353ca5a2cc53c1a12678950efaad21c2f836423c5901
 
 // NOTE: If you wanna send the tx to someone to get their signature, you can serialize the txObj and send it over in bytes, they can also deserialize it: e.g.
 // var txBytes = zerojs.transaction.serializeTx(txobj)
