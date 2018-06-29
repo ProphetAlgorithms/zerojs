@@ -13,32 +13,14 @@ var zaddress = require('./address')
 var zopcodes = require('./opcodes')
 
 function mkNullDataReplayScript (
-  data: string,
-  blockHeight: number,
-  blockHash: string
+  data: string
 ): string {
   var dataHex = Buffer.from(data).toString('hex')
-
-  // Minimal encoding
-  var blockHeightBuffer = Buffer.alloc(4)
-  blockHeightBuffer.writeUInt32LE(blockHeight, 0)
-  if (blockHeightBuffer[3] === 0x00) {
-    blockHeightBuffer = blockHeightBuffer.slice(0, 3)
-  }
-  var blockHeightHex = blockHeightBuffer.toString('hex')
-
-  // Block hash is encoded in little indian
-  var blockHashHex = Buffer.from(blockHash, 'hex').reverse().toString('hex')
 
   return (
     zopcodes.OP_RETURN +
     zbufferutils.getPushDataLength(dataHex) +
-    dataHex +
-    zbufferutils.getPushDataLength(blockHashHex) +
-    blockHashHex +
-    zbufferutils.getPushDataLength(blockHeightHex) +
-    blockHeightHex +
-    zopcodes.OP_CHECKBLOCKATHEIGHT
+    dataHex
   )
 }
 
@@ -53,8 +35,6 @@ function mkNullDataReplayScript (
  */
 function mkPubkeyHashReplayScript (
   address: string,
-  blockHeight: number,
-  blockHash: string,
   pubKeyHash: string = zconfig.mainnet.pubKeyHash
 ): string {
   var addrHex = bs58check.decode(address).toString('hex')
@@ -62,29 +42,13 @@ function mkPubkeyHashReplayScript (
   // Cut out pubKeyHash
   var subAddrHex = addrHex.substring(pubKeyHash.length, addrHex.length)
 
-  // Minimal encoding
-  var blockHeightBuffer = Buffer.alloc(4)
-  blockHeightBuffer.writeUInt32LE(blockHeight, 0)
-  if (blockHeightBuffer[3] === 0x00) {
-    blockHeightBuffer = blockHeightBuffer.slice(0, 3)
-  }
-  var blockHeightHex = blockHeightBuffer.toString('hex')
-
-  // Block hash is encoded in little indian
-  var blockHashHex = Buffer.from(blockHash, 'hex').reverse().toString('hex')
-
   return (
     zopcodes.OP_DUP +
     zopcodes.OP_HASH160 +
     zbufferutils.getPushDataLength(subAddrHex) +
     subAddrHex +
     zopcodes.OP_EQUALVERIFY +
-    zopcodes.OP_CHECKSIG +
-    zbufferutils.getPushDataLength(blockHashHex) +
-    blockHashHex +
-    zbufferutils.getPushDataLength(blockHeightHex) +
-    blockHeightHex +
-    zopcodes.OP_CHECKBLOCKATHEIGHT
+    zopcodes.OP_CHECKSIG
   )
 }
 
@@ -96,33 +60,16 @@ function mkPubkeyHashReplayScript (
  * return {String} scriptHash script
  */
 function mkScriptHashReplayScript (
-  address: string,
-  blockHeight: number,
-  blockHash: string
+  address: string
 ): string {
   var addrHex = bs58check.decode(address).toString('hex')
   var subAddrHex = addrHex.substring(4, addrHex.length) // Cut out the '00' (we also only want 14 bytes instead of 16)
-
-  var blockHeightBuffer = Buffer.alloc(4)
-  blockHeightBuffer.writeUInt32LE(blockHeight, 0)
-  if (blockHeightBuffer[3] === 0x00) {
-    blockHeightBuffer = blockHeightBuffer.slice(0, 3)
-  }
-  var blockHeightHex = blockHeightBuffer.toString('hex')
-
-  // Block hash is encoded in little indian
-  var blockHashHex = Buffer.from(blockHash, 'hex').reverse().toString('hex')
 
   return (
     zopcodes.OP_HASH160 +
     zbufferutils.getPushDataLength(subAddrHex) +
     subAddrHex +
-    zopcodes.OP_EQUAL +
-    zbufferutils.getPushDataLength(blockHashHex) +
-    blockHashHex +
-    zbufferutils.getPushDataLength(blockHeightHex) +
-    blockHeightHex +
-    zopcodes.OP_CHECKBLOCKATHEIGHT
+    zopcodes.OP_EQUAL
   )
 }
 
@@ -135,22 +82,21 @@ function mkScriptHashReplayScript (
  */
 function addressToScript (
   address: string,
-  blockHeight: number,
-  blockHash: string,
   data: string
 ): string {
   // NULL transaction
   if (address === null || address === undefined) {
-    return mkNullDataReplayScript(data, blockHeight, blockHash)
+    return mkNullDataReplayScript(data)
   }
 
-  // P2SH replay starts with a 's', or 'r'
-  if (address[1] === 's' || address[1] === 'r') {
-    return mkScriptHashReplayScript(address, blockHeight, blockHash)
+ // P2SH replay starts with a 's', or 'r' - zencash
+ // P2SH replay starts with a '3', or '2' - zero
+  if (address[1] === '3' || address[1] === '2') {
+    return mkScriptHashReplayScript(address)
   }
 
   // P2PKH-replay is a replacement for P2PKH
-  return mkPubkeyHashReplayScript(address, blockHeight, blockHash)
+  return mkPubkeyHashReplayScript(address)
 }
 
 /*
@@ -327,9 +273,7 @@ function serializeTx (txObj: TXOBJ): string {
  */
 function createRawTx (
   history: HISTORY[],
-  recipients: RECIPIENTS[],
-  blockHeight: number,
-  blockHash: string
+  recipients: RECIPIENTS[]
 ): TXOBJ {
   var txObj = { locktime: 0, version: 1, ins: [], outs: [] }
 
@@ -343,7 +287,7 @@ function createRawTx (
   })
   txObj.outs = recipients.map(function (o) {
     return {
-      script: addressToScript(o.address, blockHeight, blockHash, o.data),
+      script: addressToScript(o.address, o.data),
       satoshis: o.satoshis
     }
   })
