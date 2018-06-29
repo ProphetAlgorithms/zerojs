@@ -1,24 +1,24 @@
 /*
-config.js - Configuration for ZENCash Coin
+config.js - Configuration for Zero Coin
 */
 
 module.exports = {
   mainnet: {
-    messagePrefix: 'ZENCash main net',
+    messagePrefix: 'Zero main net',
     bip32: {
       public: '0488b21e',
       private: '0488ade4'
     },
-    pubKeyHash: '2089',
-    scriptHash: '2096',
+    pubKeyHash: '1cb8',
+    scriptHash: '1cbd',
     zcPaymentAddressHash: '169a', // Private z-address
     zcSpendingKeyHash: 'ab36', // Spending key
     wif: '80'
   },
   testnet: {
     wif: 'ef',
-    pubKeyHash: '2098',
-    scriptHash: '2092',
+    pubKeyHash: '1d25',
+    scriptHash: '1cba',
     zcPaymentAddressHash: '16b6',
     zcSpendingKeyHash: 'ac08'
   }
